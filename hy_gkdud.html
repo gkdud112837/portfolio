@@ -206,12 +206,12 @@ h2 { margin:0; font-size:clamp(30px,3.5vw,46px); line-height:1.15; letter-spacin
 .ssabree .cover-character { width:185px; height:243px; }
 
 .phone-wrap { position:absolute; left:40px; bottom:42px; z-index:2; }
-.oracaree .project-cover { min-height:1130px; }
+.oracaree .project-cover { min-height:980px; }
 /* 싸브리타임은 제목이 3줄이라 폰을 더 내리고, 그만큼 커버도 높인다 */
-.ssabree .project-cover { min-height:1250px; }
+.ssabree .project-cover { min-height:1045px; }
 .ssabree .phone-wrap, .oracaree .phone-wrap { left:50%; transform:translateX(-50%); bottom:auto; }
-.oracaree .phone-wrap { top:332px; }
-.ssabree .phone-wrap { top:412px; }
+.oracaree .phone-wrap { top:299px; }
+.ssabree .phone-wrap { top:361px; }
 .phone-frame { width:330px; min-width:330px; height:660px; padding:12px; border-radius:36px; background:#111827; box-shadow:0 24px 60px rgba(16,21,34,.24); position:relative; overflow:hidden; }
 .phone-notch { width:12px; height:12px; top:18px; left:50%; transform:translateX(-50%); border-radius:999px; background:#111827; box-shadow:0 0 0 2px rgba(255,255,255,.12); position:absolute; z-index:20; }
 .phone-screen { width:306px; height:636px; border-radius:28px; overflow:hidden; background:#fff; position:relative; }
@@ -264,7 +264,9 @@ h2 { margin:0; font-size:clamp(30px,3.5vw,46px); line-height:1.15; letter-spacin
 /* 데모 자체가 실제 기기 베젤을 이미 그려서 보여주는 경우(싸브리타임) — 우리 쪽 phone-frame을 겹치지 않고
    데모 화면 그대로(베젤 포함)를 노출한다. "폰 안에 폰"이 되는 것을 방지 */
 /* 데모 뷰포트(440x880) 안의 실제 폰은 380px — 오라카이 폰(330px)과 같은 크기로 보이도록 382px로 둔다 */
-.phone-wrap--bare { width:382px; max-width:92%; }
+.phone-wrap--bare { width:322px; max-width:92%; }
+/* 오라카이는 서비스 구조 블록으로 카드가 길어져 폰을 그만큼 키운다 */
+.oracaree .phone-wrap--bare { width:429px; }
 /* 데모가 로드되기 전에도 폰 본체가 보이도록, 데모 안의 폰과 같은 자리에 미리 그려둔다.
    (데모 뷰포트 440x880 안에서 폰은 380x800, 좌 30 / 상 40 위치) */
 .phone-shell {
@@ -283,15 +285,22 @@ h2 { margin:0; font-size:clamp(30px,3.5vw,46px); line-height:1.15; letter-spacin
 .photo-boot-mark { color:#fff; font-weight:900; font-size:15px; letter-spacing:.08em; }
 .photo-boot-mark i { color:#7c3aed; font-style:normal; }
 
-.project-info { padding:40px; }
+/* 데모 쪽 높이에 맞춰 설명 영역이 남지 않도록 세로로 채운다 */
+.project-info { padding:40px; display:flex; flex-direction:column; }
 .tags { display:flex; flex-wrap:wrap; gap:10px; }
 .tag { padding:9px 16px; border:1px solid var(--line); border-radius:999px; font-size:14px; font-weight:950; background:#fbfcff; color:#344054; }
 /* 제목은 한 줄에 들어가야 하므로 열 폭에 맞춰 크기를 줄인다 */
 .project-info h3 { margin:30px 0 14px; font-size:clamp(21px,2.45vw,35px); line-height:1.25; letter-spacing:-.06em; white-space:nowrap; }
 /* 제목 아래 요약 — 두 줄 항목 */
-.proj-lead { list-style:none; margin:0; padding:0; display:grid; gap:9px; }
-.proj-lead li { position:relative; padding-left:16px; font-size:17px; line-height:1.72; color:#475467; word-break:keep-all; }
+.proj-lead { list-style:none; margin:0; padding:0; display:grid; gap:11px; }
+.proj-lead li { position:relative; padding-left:18px; font-size:18.5px; line-height:1.76; color:#475467; word-break:keep-all; }
 .proj-lead li::before { content:''; position:absolute; left:0; top:.68em; width:6px; height:6px; border-radius:999px; background:var(--violet); }
+/* 실제 운영 성과 */
+.proj-metrics { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
+.proj-metric { flex:1; min-width:112px; padding:14px 16px; border-radius:14px; background:#f6f4ff; border:1px solid rgba(107,92,255,.18); }
+.proj-metric b { display:block; font-size:26px; font-weight:950; letter-spacing:-.045em; color:var(--violet); }
+.proj-metric b em { font-style:normal; font-size:15px; font-weight:900; margin-left:1px; }
+.proj-metric span { display:block; margin-top:3px; font-size:12.5px; font-weight:800; color:#667085; }
 .project-info>p { color:var(--muted); font-size:17px; line-height:1.85; margin:0; word-break:keep-all; }
 
 .two-cols { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px; }
@@ -750,18 +759,19 @@ footer { padding:34px 0 60px; text-align:center; color:var(--muted); font-size:1
 }
 
 /* Project detail redesign */
-.proj-detail { display:flex; flex-direction:column; gap:14px; margin-top:24px; }
-.proj-section { border:1px solid var(--line); border-radius:16px; padding:16px 20px; background:#fff; }
-.proj-label { font-size:19px; font-weight:900; letter-spacing:.01em; color:var(--violet); margin-bottom:14px; }
-.proj-meta-list { display:flex; flex-direction:column; gap:8px; }
-.proj-meta-item { display:flex; gap:12px; font-size:16px; line-height:1.6; }
-.proj-meta-item .mk { color:#101522; min-width:92px; font-weight:800; flex-shrink:0; }
-.proj-role-list { font-size:16px; line-height:1.85; display:flex; flex-direction:column; gap:6px; color:#344054; }
-.proj-role-list > div { display:flex; gap:12px; align-items:baseline; }
-.proj-role-list .rk { font-weight:800; color:#101522; min-width:92px; flex-shrink:0; }
+.proj-detail { flex:1; display:flex; flex-direction:column; justify-content:flex-start; gap:18px; margin-top:26px; }
+/* 남는 높이를 두 카드가 나눠 갖고, 내용은 가운데에 둔다 */
+.proj-section { flex:none; border:1px solid var(--line); border-radius:18px; padding:24px 26px; background:#fff; }
+.proj-label { font-size:21px; font-weight:900; letter-spacing:.01em; color:var(--violet); margin-bottom:18px; }
+.proj-meta-list { display:flex; flex-direction:column; gap:12px; }
+.proj-meta-item { display:flex; gap:14px; font-size:17.5px; line-height:1.65; }
+.proj-meta-item .mk { color:#101522; min-width:104px; font-weight:800; flex-shrink:0; }
+.proj-role-list { font-size:17.5px; line-height:1.85; display:flex; flex-direction:column; gap:11px; color:#344054; }
+.proj-role-list > div { display:flex; gap:14px; align-items:baseline; }
+.proj-role-list .rk { font-weight:800; color:#101522; min-width:104px; flex-shrink:0; }
 /* 역할의 사용 기술 칩 */
 .proj-role-list .rk-tags { display:flex; flex-wrap:wrap; gap:6px; }
-.proj-role-list .rk-tags .tag { padding:5px 13px; font-size:14px; font-weight:900; }
+.proj-role-list .rk-tags .tag { padding:6px 15px; font-size:15px; font-weight:900; }
 /* 트러블 슈팅으로 옮긴 데이터 관리 · 성능 개선 */
 .ts-facts { display:grid; gap:9px; }
 .ts-fact { display:flex; gap:10px; align-items:baseline; font-size:13.5px; line-height:1.7; }
@@ -790,50 +800,45 @@ footer { padding:34px 0 60px; text-align:center; color:var(--muted); font-size:1
 .key-skill-item ul { margin:0; padding-left:17px; font-size:14px; line-height:1.7; color:#475467; }
 .key-skill-item li+li { margin-top:4px; }
 .ai-list { display:flex; flex-direction:column; gap:16px; margin-top:28px; }
-.ai-item { border:1px solid var(--line); border-radius:20px; padding:22px 26px; background:#fff; }
-.ai-item-top { display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+.ai-item { border:1px solid var(--line); border-radius:20px; padding:24px 28px; background:#fff; }
+.ai-item-top { display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
 .ai-num { width:32px; height:32px; border-radius:10px; background:#eef2ff; color:var(--violet); font-weight:950; font-size:14px; display:grid; place-items:center; flex-shrink:0; }
-.ai-item h3 { margin:0; font-size:18px; letter-spacing:-.02em; flex:1; }
-.ai-proj-tag { font-size:11px; font-weight:900; background:rgba(124,58,237,.1); color:var(--violet); border-radius:999px; padding:3px 10px; white-space:nowrap; }
-.ai-tech { font-size:15px; color:var(--muted); margin-bottom:10px; }
-.ai-tech strong { color:#344054; }
-.ai-item ul { margin:0; padding-left:17px; font-size:16px; line-height:1.75; color:#475467; }
+.ai-item h3 { margin:0; font-size:19px; letter-spacing:-.025em; flex:1; }
+.ai-proj-tag { font-size:12px; font-weight:900; background:rgba(124,58,237,.1); color:var(--violet); border-radius:999px; padding:4px 12px; white-space:nowrap; }
+/* 프로젝트 카드 안의 서비스 구조 도형 */
+.proj-figs { display:flex; flex-direction:column; gap:18px; }
+.proj-fig { margin:0; }
+.proj-svg { display:block; width:100%; height:auto; font-family:inherit; }
+.proj-fig figcaption { margin-top:8px; font-size:13.5px; line-height:1.65; color:#667085; word-break:keep-all; }
+
+/* 발표 자료의 핵심 흐름만 추려 직접 그린 도형 */
+.ai-figs { display:grid; gap:22px; margin-bottom:20px; }
+.ai-fig { margin:0; padding:20px 22px; border:1px solid var(--line); border-radius:18px; background:#fcfcff; }
+.ai-svg { display:block; width:100%; height:auto; font-family:inherit; }
+.ai-fig figcaption { margin-top:12px; font-size:15px; line-height:1.7; color:#475467; word-break:keep-all; }
+
+.ai-item ul { margin:0; padding-left:18px; font-size:16px; line-height:1.78; color:#475467; }
 .ai-item li+li { margin-top:6px; }
-.ai-intro-quote { border-left:4px solid var(--violet); padding:14px 18px; background:rgba(124,58,237,.05); border-radius:0 12px 12px 0; font-size:16px; font-weight:700; color:#344054; line-height:1.7; margin-bottom:0; word-break:keep-all; }
+
 /* Trouble Card */
-.trouble-card { border-top:3px solid var(--violet); padding:36px 40px; background:#fafbff; }
-.trouble-card-inner { display:grid; grid-template-columns:1fr 1fr; gap:40px; }
-.ts-left { display:flex; flex-direction:column; }
-.ts-right { display:flex; flex-direction:column; }
-.ts-badge { font-size:16px; font-weight:900; letter-spacing:.02em; color:var(--violet); margin-bottom:10px; }
-.ts-title { font-size:18px; font-weight:900; letter-spacing:-.04em; margin:0 0 22px; color:#101522; }
-.ts-section-label { font-size:16px; font-weight:900; letter-spacing:.02em; color:var(--violet); margin-bottom:12px; }
-.ts-problem-box { border-left:4px solid var(--violet); background:rgba(124,58,237,.06); border-radius:0 10px 10px 0; padding:12px 16px; margin-bottom:20px; }
-.ts-issue-tag { font-weight:800; font-size:13px; color:var(--violet); margin-bottom:5px; }
-.ts-problem-desc { font-size:13px; color:#344054; line-height:1.65; margin:0; }
-.ts-steps { display:flex; flex-direction:column; gap:12px; }
-.ts-step { display:grid; grid-template-columns:82px 1fr; gap:8px; font-size:13px; }
-.ts-step-label { font-weight:800; color:var(--violet); }
-.ts-step-desc { color:#475467; line-height:1.6; }
-.ts-step-desc .hi { color:var(--violet); font-weight:700; }
-.ts-compare-label { font-size:16px; font-weight:900; letter-spacing:.02em; color:var(--violet); margin-bottom:14px; }
-.ts-table { width:100%; border-collapse:collapse; font-size:14px; margin-bottom:20px; }
-.ts-table th { text-align:left; padding:8px 12px; border-bottom:1px solid var(--line); font-weight:800; font-size:12px; letter-spacing:.04em; text-transform:uppercase; }
-.ts-table th:nth-child(2) { color:#E74C3C; }
-.ts-table th:nth-child(3) { color:#17A168; }
-.ts-table td { padding:10px 12px; border-bottom:1px solid var(--line); line-height:1.5; }
-.ts-table td:first-child { font-weight:800; font-size:14px; }
-.ts-table td:nth-child(2) { color:#E74C3C; }
-.ts-table td:nth-child(3) { color:#17A168; background:rgba(23,161,104,.06); }
-.ts-divider { height:1px; background:linear-gradient(to right,rgba(124,58,237,.5),rgba(124,58,237,.1)); border:none; margin:14px 0 16px; }
-.ts-ba { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.ts-ba-box { border-radius:12px; padding:22px 18px; text-align:center; min-height:110px; display:flex; flex-direction:column; justify-content:center; }
-.ts-ba-box.before { background:rgba(231,76,60,.07); border:1px solid rgba(231,76,60,.22); }
-.ts-ba-box.after { background:rgba(23,161,104,.07); border:1px solid rgba(23,161,104,.22); }
-.ts-ba-title { font-size:13px; font-weight:900; margin-bottom:10px; }
-.ts-ba-box.before .ts-ba-title { color:#E74C3C; }
-.ts-ba-box.after .ts-ba-title { color:#17A168; }
-.ts-ba-content { font-size:13px; line-height:1.7; color:#475467; }
+.trouble-card { border-top:3px solid var(--violet); padding:36px 40px 40px; background:#fafbff; }
+
+.ts-badge { font-size:16px; font-weight:900; letter-spacing:.02em; color:var(--violet); }
+.ts-title { font-size:21px; font-weight:900; letter-spacing:-.04em; margin:0 0 10px; color:#101522; }
+.ts-section-label { font-size:16px; font-weight:900; letter-spacing:.02em; color:var(--violet); margin-bottom:14px; }
+.ts-problem-box { border-left:4px solid var(--violet); background:rgba(124,58,237,.06); border-radius:0 12px 12px 0; padding:16px 20px; margin:14px 0 26px; }
+
+
+.ts-problem-desc { font-size:14.5px; color:#344054; line-height:1.7; margin:0; }
+.ts-problem-desc b { color:#101522; font-weight:900; }
+/* 도형 다이어그램 — 가로폭에 맞춰 자동으로 줄어든다 */
+.ts-figure { width:100%; }
+.ts-svg { display:block; width:100%; height:auto; font-family:inherit; }
+/* 결과 수치 */
+.ts-metrics { display:flex; flex-wrap:wrap; gap:10px; }
+.ts-metric { min-width:118px; padding:12px 18px; border-radius:14px; background:#fff; border:1px solid var(--line); }
+.ts-metric b { display:block; font-size:25px; font-weight:950; letter-spacing:-.045em; color:var(--violet); }
+.ts-metric span { display:block; margin-top:2px; font-size:12.5px; font-weight:800; color:#667085; }
 /* Overview section */
 .proj-overview-list { display:flex; flex-direction:column; gap:6px; font-size:14px; }
 .proj-overview-item { display:flex; gap:10px; }
@@ -925,8 +930,8 @@ footer { padding:34px 0 60px; text-align:center; color:var(--muted); font-size:1
       <div class="intro-block">
         <h3>웹과 앱을 모두 개발합니다.</h3>
         <ol>
-          <li>React·TypeScript로 실시간 강의 번역 웹, Vue.js·Django로 영화 추천 웹을 개발했습니다.</li>
-          <li>Kotlin·Jetpack Compose로 Android 앱 2개를 개발했습니다.<br>자율주행 택시 호출 앱은 Android 단독 개발, 교육생 커뮤니티 앱은 UI 설계와 주요 화면을 구현했습니다.</li>
+          <li>React·TypeScript로 실시간 강의 번역 웹, <br>Vue.js·Django로 영화 추천 웹을 개발했습니다.</li>
+          <li>Kotlin·Jetpack Compose로 Android 앱 2개를 개발했습니다.<br>자율주행 택시 호출 앱은 Android 단독 개발, <br>교육생 커뮤니티 앱은 UI 설계와 주요 화면을 구현했습니다.</li>
         </ol>
       </div>
 
@@ -1017,62 +1022,15 @@ footer { padding:34px 0 60px; text-align:center; color:var(--muted); font-size:1
       </div>
 
     <div class="trouble-card">
-      <div class="trouble-card-inner">
-        <div class="ts-left">
-          <div class="ts-badge">트러블 슈팅</div>
-          <h4 class="ts-title">JPEG-over-WebSocket 지연 · 깜빡임 · Freeze</h4>
-          <div class="ts-section-label">문제 정의</div>
-          <div class="ts-problem-box">
-            <div class="ts-issue-tag">실시간 영상 처리 지연</div>
-            <p class="ts-problem-desc">JPEG 프레임을 WebSocket으로 반복 전송하는 구조에서 프레임 지연 · 깜빡임 · Freeze 현상 발생, 번역 오버레이 타이밍 불일치로 UX 저하</p>
-          </div>
-          <div class="ts-section-label" style="margin-top:20px">문제 해결</div>
-          <div class="ts-steps">
-            <div class="ts-step">
-              <span class="ts-step-label">① 진단</span>
-              <span class="ts-step-desc">프레임 드롭 · <span class="hi">지연 원인 분석</span> (네트워크 vs 렌더링)</span>
-            </div>
-            <div class="ts-step">
-              <span class="ts-step-label">② 전략</span>
-              <span class="ts-step-desc">JPEG→<span class="hi">WebRTC 전환</span> 결정 · 3-Layer Canvas 구조 설계</span>
-            </div>
-            <div class="ts-step">
-              <span class="ts-step-label">③ 적용</span>
-              <span class="ts-step-desc">WebRTC 트랙 수신 + <span class="hi">Canvas 3-Layer</span> 렌더링 구현</span>
-            </div>
-            <div class="ts-step">
-              <span class="ts-step-label">④ 검증</span>
-              <span class="ts-step-desc">지연 측정 비교 · <span class="hi">Freeze 제거 확인</span></span>
-            </div>
-          </div>
-          <div class="ts-section-label" style="margin-top:20px">적용 결과</div>
-          <div class="ts-facts">
-            <div class="ts-fact"><span class="ts-fact-k">성능 개선</span><span>JPEG→WebRTC 전환 · 지연 82% 감소 · Freeze 제거</span></div>
-          </div>
-        </div>
-        <div class="ts-right">
-          <div class="ts-compare-label">비교</div>
-          <table class="ts-table">
-            <thead><tr><th>구분</th><th>BEFORE</th><th>AFTER</th></tr></thead>
-            <tbody>
-              <tr><td>전송 방식</td><td>JPEG over WebSocket</td><td>WebRTC 스트림</td></tr>
-              <tr><td>지연 현상</td><td>300~500ms 지연</td><td>50ms 이하</td></tr>
-              <tr><td>Canvas 렌더링</td><td>단일 레이어 충돌</td><td>3-Layer 분리</td></tr>
-            </tbody>
-          </table>
-          <div class="ts-divider"></div>
-          <div class="ts-ba">
-            <div class="ts-ba-box before">
-              <div class="ts-ba-title">BEFORE</div>
-              <div class="ts-ba-content">JPEG 프레임 WebSocket 전송 → 300~500ms 지연, Freeze 발생, 번역 오버레이 타이밍 불일치</div>
-            </div>
-            <div class="ts-ba-box after">
-              <div class="ts-ba-title">AFTER</div>
-              <div class="ts-ba-content">WebRTC 전환 + Canvas 3-Layer 구조 → 지연 82% 감소, Freeze 제거, 오버레이 동기화</div>
-            </div>
-          </div>
-        </div>
+      <div class="ts-badge">트러블 슈팅</div>
+      <div class="ts-problem-box">
+        <h4 class="ts-title">JPEG 전송 구조로 인한 화면 공유 지연</h4>
+        <p class="ts-problem-desc">JPEG 프레임을 WebSocket으로 반복 전송해 <b>300~500ms 지연</b>과 Freeze가 발생하고, 번역 오버레이 타이밍이 어긋났습니다.</p>
       </div>
+      <div class="ts-section-label">해결 과정</div>
+      <div class="ts-figure"><svg class="ts-svg" viewBox="0 0 1200 178" role="img" aria-label="트러블 슈팅 7단계"><line x1="86" y1="44" x2="1114" y2="44" stroke="#dfe4f0" stroke-width="3" stroke-linecap="round"/><circle cx="86" cy="44" r="26" fill="#FDEEE9" stroke="#E4572E" stroke-width="2.6"/><text x="86" y="51.5" text-anchor="middle" font-size="19" font-weight="900" fill="#E4572E">1</text><text x="86" y="102" text-anchor="middle" font-size="18" font-weight="900" fill="#101522">증상 확인</text><text x="86" y="128" text-anchor="middle" font-size="15.5" fill="#5a6577">화면 끊김 · Freeze</text><circle cx="257.33333333333337" cy="44" r="26" fill="#FDEEE9" stroke="#E4572E" stroke-width="2.6"/><text x="257.33333333333337" y="51.5" text-anchor="middle" font-size="19" font-weight="900" fill="#E4572E">2</text><text x="257.33333333333337" y="102" text-anchor="middle" font-size="18" font-weight="900" fill="#101522">로그 수집</text><text x="257.33333333333337" y="128" text-anchor="middle" font-size="15.5" fill="#5a6577">프레임 도착 시각</text><circle cx="428.6666666666667" cy="44" r="26" fill="#FDF4DF" stroke="#D99A00" stroke-width="2.6"/><text x="428.6666666666667" y="51.5" text-anchor="middle" font-size="19" font-weight="900" fill="#D99A00">3</text><text x="428.6666666666667" y="102" text-anchor="middle" font-size="18" font-weight="900" fill="#101522">원인 분리</text><text x="428.6666666666667" y="128" text-anchor="middle" font-size="15.5" fill="#5a6577">네트워크 / 렌더링</text><circle cx="600" cy="44" r="26" fill="#FDF4DF" stroke="#D99A00" stroke-width="2.6"/><text x="600" y="51.5" text-anchor="middle" font-size="19" font-weight="900" fill="#D99A00">4</text><text x="600" y="102" text-anchor="middle" font-size="18" font-weight="900" fill="#101522">대안 비교</text><text x="600" y="128" text-anchor="middle" font-size="15.5" fill="#5a6577">JPEG vs WebRTC</text><circle cx="771.3333333333334" cy="44" r="26" fill="#EFEDFF" stroke="#6B5CFF" stroke-width="2.6"/><text x="771.3333333333334" y="51.5" text-anchor="middle" font-size="19" font-weight="900" fill="#6B5CFF">5</text><text x="771.3333333333334" y="102" text-anchor="middle" font-size="18" font-weight="900" fill="#101522">구조 설계</text><text x="771.3333333333334" y="128" text-anchor="middle" font-size="15.5" fill="#5a6577">WebRTC 전환</text><text x="771.3333333333334" y="150" text-anchor="middle" font-size="15.5" fill="#5a6577">Canvas 3-Layer 분리</text><circle cx="942.6666666666667" cy="44" r="26" fill="#EFEDFF" stroke="#6B5CFF" stroke-width="2.6"/><text x="942.6666666666667" y="51.5" text-anchor="middle" font-size="19" font-weight="900" fill="#6B5CFF">6</text><text x="942.6666666666667" y="102" text-anchor="middle" font-size="18" font-weight="900" fill="#101522">구현 적용</text><text x="942.6666666666667" y="128" text-anchor="middle" font-size="15.5" fill="#5a6577">트랙 수신</text><text x="942.6666666666667" y="150" text-anchor="middle" font-size="15.5" fill="#5a6577">레이어별 렌더링</text><circle cx="1114" cy="44" r="26" fill="#E6F5EE" stroke="#17A168" stroke-width="2.6"/><text x="1114" y="51.5" text-anchor="middle" font-size="19" font-weight="900" fill="#17A168">7</text><text x="1114" y="102" text-anchor="middle" font-size="18" font-weight="900" fill="#101522">측정 검증</text><text x="1114" y="128" text-anchor="middle" font-size="15.5" fill="#5a6577">지연 82% 감소</text></svg></div>
+      <div class="ts-section-label" style="margin-top:26px">구조 변화</div>
+      <div class="ts-figure"><svg class="ts-svg" viewBox="0 0 1200 448" role="img" aria-label="구조 변화"><rect x="0" y="0" width="566" height="442" rx="18" fill="#FDF1ED" stroke="#E4572E" stroke-opacity=".3"/><text x="24" y="38" font-size="13" font-weight="900" letter-spacing="1.6" fill="#E4572E">BEFORE</text><rect x="24" y="64" width="518" height="46" rx="12" fill="#ffffff" stroke="#d7ddea" stroke-opacity="1"/><text x="283" y="92.5" text-anchor="middle" font-size="14.5" font-weight="800" fill="#101522">강의자 화면</text><path d="M283 115 V 129" stroke="#E4572E" stroke-opacity=".55" stroke-width="2.2"/><path d="M278 126 L283 133 L288 126" fill="none" stroke="#E4572E" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="24" y="140" width="518" height="46" rx="12" fill="#ffffff" stroke="#E4572E" stroke-opacity=".55"/><text x="283" y="168.5" text-anchor="middle" font-size="14.5" font-weight="800" fill="#E4572E">JPEG 인코딩</text><path d="M283 191 V 205" stroke="#E4572E" stroke-opacity=".55" stroke-width="2.2"/><path d="M278 202 L283 209 L288 202" fill="none" stroke="#E4572E" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="24" y="216" width="518" height="46" rx="12" fill="#ffffff" stroke="#E4572E" stroke-opacity=".55"/><text x="283" y="244.5" text-anchor="middle" font-size="14.5" font-weight="800" fill="#E4572E">WebSocket 반복 전송</text><path d="M283 267 V 281" stroke="#E4572E" stroke-opacity=".55" stroke-width="2.2"/><path d="M278 278 L283 285 L288 278" fill="none" stroke="#E4572E" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="24" y="292" width="518" height="46" rx="12" fill="#ffffff" stroke="#E4572E" stroke-opacity=".55"/><text x="283" y="320.5" text-anchor="middle" font-size="14.5" font-weight="800" fill="#E4572E">단일 Canvas 렌더링</text><path d="M283 343 V 357" stroke="#E4572E" stroke-opacity=".55" stroke-width="2.2"/><path d="M278 354 L283 361 L288 354" fill="none" stroke="#E4572E" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="24" y="368" width="518" height="48" rx="12" fill="#E4572E"/><text x="283" y="397" text-anchor="middle" font-size="14" font-weight="900" fill="#ffffff">수강자 화면 300~500ms 지연 · Freeze</text><rect x="634" y="0" width="566" height="448" rx="18" fill="#E9F6F0" stroke="#17A168" stroke-opacity=".3"/><text x="658" y="38" font-size="13" font-weight="900" letter-spacing="1.6" fill="#17A168">AFTER</text><rect x="658" y="64" width="518" height="46" rx="12" fill="#ffffff" stroke="#d7ddea" stroke-opacity="1"/><text x="917" y="92.5" text-anchor="middle" font-size="14.5" font-weight="800" fill="#101522">강의자 화면</text><path d="M917 115 V 129" stroke="#17A168" stroke-opacity=".55" stroke-width="2.2"/><path d="M912 126 L917 133 L922 126" fill="none" stroke="#17A168" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="658" y="140" width="518" height="46" rx="12" fill="#ffffff" stroke="#17A168" stroke-opacity=".55"/><text x="917" y="168.5" text-anchor="middle" font-size="14.5" font-weight="800" fill="#17A168">WebRTC 트랙</text><path d="M917 191 V 205" stroke="#17A168" stroke-opacity=".55" stroke-width="2.2"/><path d="M912 202 L917 209 L922 202" fill="none" stroke="#17A168" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="658" y="216" width="518" height="46" rx="12" fill="#ffffff" stroke="#17A168" stroke-opacity=".55"/><text x="917" y="244.5" text-anchor="middle" font-size="14.5" font-weight="800" fill="#17A168">Canvas 3-Layer (영상 · 번역 · 필기)</text><path d="M917 267 V 281" stroke="#17A168" stroke-opacity=".55" stroke-width="2.2"/><path d="M912 278 L917 285 L922 278" fill="none" stroke="#17A168" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="658" y="292" width="518" height="48" rx="12" fill="#17A168"/><text x="917" y="321" text-anchor="middle" font-size="14" font-weight="900" fill="#ffffff">수강자 화면 딜레이 50ms 이하 · Freeze 제거</text><rect x="658" y="358" width="166" height="64" rx="12" fill="#ffffff" stroke="#17A168" stroke-opacity=".32"/><text x="741" y="387" text-anchor="middle" font-size="22" font-weight="900" fill="#6B5CFF">82%</text><text x="741" y="407" text-anchor="middle" font-size="12.5" font-weight="800" fill="#667085">지연 감소</text><rect x="834" y="358" width="166" height="64" rx="12" fill="#ffffff" stroke="#17A168" stroke-opacity=".32"/><text x="917" y="387" text-anchor="middle" font-size="22" font-weight="900" fill="#6B5CFF">50ms</text><text x="917" y="407" text-anchor="middle" font-size="12.5" font-weight="800" fill="#667085">이하로 단축</text><rect x="1010" y="358" width="166" height="64" rx="12" fill="#ffffff" stroke="#17A168" stroke-opacity=".32"/><text x="1093" y="387" text-anchor="middle" font-size="22" font-weight="900" fill="#6B5CFF">0</text><text x="1093" y="407" text-anchor="middle" font-size="12.5" font-weight="800" fill="#667085">Freeze</text></svg></div>
     </div>    </article>
 
     <article class="project oracaree" id="project-oracaree">
@@ -1115,67 +1073,25 @@ footer { padding:34px 0 60px; text-align:center; color:var(--muted); font-size:1
               </div>
             </div>
 
+            <div class="proj-section proj-figs">
+              <div class="proj-label">서비스 구조</div>
+              <figure class="proj-fig"><svg class="proj-svg" viewBox="0 0 632 92" role="img" aria-label="서비스 흐름"><line x1="50" y1="34" x2="582" y2="34" stroke="#e2e8ec" stroke-width="2.5" stroke-linecap="round"/><circle cx="50" cy="34" r="19" fill="#EAF4EC" stroke="#4F9D62" stroke-width="2"/><text x="50" y="39.5" text-anchor="middle" font-size="14" font-weight="900" fill="#4F9D62">1</text><text x="50" y="76" text-anchor="middle" font-size="13" font-weight="800" fill="#101522">목적지 입력</text><circle cx="183" cy="34" r="19" fill="#EAF4EC" stroke="#4F9D62" stroke-width="2"/><text x="183" y="39.5" text-anchor="middle" font-size="14" font-weight="900" fill="#4F9D62">2</text><text x="183" y="76" text-anchor="middle" font-size="13" font-weight="800" fill="#101522">호출 요청</text><circle cx="316" cy="34" r="19" fill="#EAF4EC" stroke="#4F9D62" stroke-width="2"/><text x="316" y="39.5" text-anchor="middle" font-size="14" font-weight="900" fill="#4F9D62">3</text><text x="316" y="76" text-anchor="middle" font-size="13" font-weight="800" fill="#101522">경로 생성</text><circle cx="449" cy="34" r="19" fill="#EAF4EC" stroke="#4F9D62" stroke-width="2"/><text x="449" y="39.5" text-anchor="middle" font-size="14" font-weight="900" fill="#4F9D62">4</text><text x="449" y="76" text-anchor="middle" font-size="13" font-weight="800" fill="#101522">지도 표시</text><circle cx="582" cy="34" r="19" fill="#4F9D62" stroke="#4F9D62" stroke-width="2"/><text x="582" y="39.5" text-anchor="middle" font-size="14" font-weight="900" fill="#fff">5</text><text x="582" y="76" text-anchor="middle" font-size="13" font-weight="800" fill="#101522">실시간 트래킹</text></svg></figure>
+              <figure class="proj-fig"><svg class="proj-svg" viewBox="0 0 632 128" role="img" aria-label="서비스 설계"><rect x="8" y="40" width="148" height="50" rx="13" fill="#fff" stroke="#4F9D62" stroke-opacity=".45"/><text x="82" y="71" text-anchor="middle" font-size="14.5" font-weight="900" fill="#101522">앱</text><rect x="242" y="40" width="148" height="50" rx="13" fill="#fff" stroke="#4F9D62" stroke-opacity=".45"/><text x="316" y="71" text-anchor="middle" font-size="14.5" font-weight="900" fill="#101522">스프링부트</text><rect x="476" y="40" width="148" height="50" rx="13" fill="#fff" stroke="#4F9D62" stroke-opacity=".45"/><text x="550" y="71" text-anchor="middle" font-size="14.5" font-weight="900" fill="#101522">ROS 시뮬레이터</text><path d="M168 65 H 230" stroke="#4F9D62" stroke-opacity=".6" stroke-width="2.2" stroke-linecap="round"/><path d="M174 60 L167 65 L174 70" fill="none" stroke="#4F9D62" stroke-opacity=".6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M224 60 L231 65 L224 70" fill="none" stroke="#4F9D62" stroke-opacity=".6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><text x="199" y="28" text-anchor="middle" font-size="12" font-weight="800" fill="#6b7689">HTTP · 일회성 명령</text><text x="199" y="114" text-anchor="middle" font-size="12" font-weight="900" fill="#4F9D62">WebSocket · 실시간 데이터</text><path d="M402 65 H 464" stroke="#4F9D62" stroke-opacity=".6" stroke-width="2.2" stroke-linecap="round"/><path d="M408 60 L401 65 L408 70" fill="none" stroke="#4F9D62" stroke-opacity=".6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M458 60 L465 65 L458 70" fill="none" stroke="#4F9D62" stroke-opacity=".6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><text x="433" y="28" text-anchor="middle" font-size="12" font-weight="800" fill="#6b7689">주행 명령</text><text x="433" y="114" text-anchor="middle" font-size="12" font-weight="800" fill="#6b7689">차량 상태 · 좌표</text></svg></figure>
+            </div>
           </div>
         </div>
       </div>
 
     <div class="trouble-card">
-      <div class="trouble-card-inner">
-        <div class="ts-left">
-          <div class="ts-badge">트러블 슈팅</div>
-          <h4 class="ts-title">차량 마커 튐 · 깜빡임 · 경로선 잔존</h4>
-          <div class="ts-section-label">문제 정의</div>
-          <div class="ts-problem-box">
-            <div class="ts-issue-tag">실시간 마커 렌더링 불안정</div>
-            <p class="ts-problem-desc">STOMP 수신 좌표를 그대로 마커에 반영하면서 ROS 좌표계 오차 · WebSocket 메시지 타이밍 불일치로 마커 튐·깜빡임·이전 경로선 잔존 현상 발생</p>
-          </div>
-          <div class="ts-section-label" style="margin-top:20px">문제 해결</div>
-          <div class="ts-steps">
-            <div class="ts-step">
-              <span class="ts-step-label">① 진단</span>
-              <span class="ts-step-desc">수신 좌표 로깅 · <span class="hi">좌표계 불일치 원인 분석</span></span>
-            </div>
-            <div class="ts-step">
-              <span class="ts-step-label">② 전략</span>
-              <span class="ts-step-desc"><span class="hi">ROS 좌표 보정 로직</span> 재설계 · 경로선 갱신 조건 수립</span>
-            </div>
-            <div class="ts-step">
-              <span class="ts-step-label">③ 적용</span>
-              <span class="ts-step-desc">보정 계산 적용 · <span class="hi">경로선 초기화 타이밍</span> 수정</span>
-            </div>
-            <div class="ts-step">
-              <span class="ts-step-label">④ 검증</span>
-              <span class="ts-step-desc">실제 주행 시나리오 반복 테스트 · <span class="hi">안정성 확인</span></span>
-            </div>
-          </div>
-          <div class="ts-section-label" style="margin-top:20px">적용 결과</div>
-          <div class="ts-facts">
-            <div class="ts-fact"><span class="ts-fact-k">성능 개선</span><span>마커 튐·깜빡임 제거 · 경로선 갱신 안정화</span></div>
-          </div>
-        </div>
-        <div class="ts-right">
-          <div class="ts-compare-label">비교</div>
-          <table class="ts-table">
-            <thead><tr><th>구분</th><th>BEFORE</th><th>AFTER</th></tr></thead>
-            <tbody>
-              <tr><td>마커 상태</td><td>튐·깜빡임 빈번</td><td>부드러운 이동</td></tr>
-              <tr><td>경로선</td><td>이전 경로 잔존</td><td>정상 갱신</td></tr>
-              <tr><td>좌표 처리</td><td>ROS 원본 그대로</td><td>보정 후 반영</td></tr>
-            </tbody>
-          </table>
-          <div class="ts-divider"></div>
-          <div class="ts-ba">
-            <div class="ts-ba-box before">
-              <div class="ts-ba-title">BEFORE</div>
-              <div class="ts-ba-content">STOMP 수신 좌표 직접 반영 → 마커 튐·깜빡임, 경로선 갱신 오류</div>
-            </div>
-            <div class="ts-ba-box after">
-              <div class="ts-ba-title">AFTER</div>
-              <div class="ts-ba-content">ROS 좌표 보정 적용 + 경로선 초기화 타이밍 수정 → 실시간 안정화</div>
-            </div>
-          </div>
-        </div>
+      <div class="ts-badge">트러블 슈팅</div>
+      <div class="ts-problem-box">
+        <h4 class="ts-title">ROS 좌표 오차로 인한 차량 마커 튐</h4>
+        <p class="ts-problem-desc">STOMP로 받은 좌표를 그대로 반영해 <b>마커가 튀고 깜빡이며</b>, 이전 경로선이 지워지지 않았습니다.</p>
       </div>
+      <div class="ts-section-label">해결 과정</div>
+      <div class="ts-figure"><svg class="ts-svg" viewBox="0 0 1200 156" role="img" aria-label="트러블 슈팅 7단계"><line x1="86" y1="44" x2="1114" y2="44" stroke="#dfe4f0" stroke-width="3" stroke-linecap="round"/><circle cx="86" cy="44" r="26" fill="#FDEEE9" stroke="#E4572E" stroke-width="2.6"/><text x="86" y="51.5" text-anchor="middle" font-size="19" font-weight="900" fill="#E4572E">1</text><text x="86" y="102" text-anchor="middle" font-size="18" font-weight="900" fill="#101522">증상 확인</text><text x="86" y="128" text-anchor="middle" font-size="15.5" fill="#5a6577">마커 튐 · 깜빡임</text><circle cx="257.33333333333337" cy="44" r="26" fill="#FDEEE9" stroke="#E4572E" stroke-width="2.6"/><text x="257.33333333333337" y="51.5" text-anchor="middle" font-size="19" font-weight="900" fill="#E4572E">2</text><text x="257.33333333333337" y="102" text-anchor="middle" font-size="18" font-weight="900" fill="#101522">좌표 로깅</text><text x="257.33333333333337" y="128" text-anchor="middle" font-size="15.5" fill="#5a6577">수신 좌표 기록</text><circle cx="428.6666666666667" cy="44" r="26" fill="#FDF4DF" stroke="#D99A00" stroke-width="2.6"/><text x="428.6666666666667" y="51.5" text-anchor="middle" font-size="19" font-weight="900" fill="#D99A00">3</text><text x="428.6666666666667" y="102" text-anchor="middle" font-size="18" font-weight="900" fill="#101522">원인 분석</text><text x="428.6666666666667" y="128" text-anchor="middle" font-size="15.5" fill="#5a6577">ROS 좌표계 오차</text><circle cx="600" cy="44" r="26" fill="#FDF4DF" stroke="#D99A00" stroke-width="2.6"/><text x="600" y="51.5" text-anchor="middle" font-size="19" font-weight="900" fill="#D99A00">4</text><text x="600" y="102" text-anchor="middle" font-size="18" font-weight="900" fill="#101522">지점 선택</text><text x="600" y="128" text-anchor="middle" font-size="15.5" fill="#5a6577">수신 시점 보정</text><circle cx="771.3333333333334" cy="44" r="26" fill="#EFEDFF" stroke="#6B5CFF" stroke-width="2.6"/><text x="771.3333333333334" y="51.5" text-anchor="middle" font-size="19" font-weight="900" fill="#6B5CFF">5</text><text x="771.3333333333334" y="102" text-anchor="middle" font-size="18" font-weight="900" fill="#101522">로직 설계</text><text x="771.3333333333334" y="128" text-anchor="middle" font-size="15.5" fill="#5a6577">보정 · 갱신 조건</text><circle cx="942.6666666666667" cy="44" r="26" fill="#EFEDFF" stroke="#6B5CFF" stroke-width="2.6"/><text x="942.6666666666667" y="51.5" text-anchor="middle" font-size="19" font-weight="900" fill="#6B5CFF">6</text><text x="942.6666666666667" y="102" text-anchor="middle" font-size="18" font-weight="900" fill="#101522">구현 적용</text><text x="942.6666666666667" y="128" text-anchor="middle" font-size="15.5" fill="#5a6577">StateFlow 반영</text><circle cx="1114" cy="44" r="26" fill="#E6F5EE" stroke="#17A168" stroke-width="2.6"/><text x="1114" y="51.5" text-anchor="middle" font-size="19" font-weight="900" fill="#17A168">7</text><text x="1114" y="102" text-anchor="middle" font-size="18" font-weight="900" fill="#101522">주행 검증</text><text x="1114" y="128" text-anchor="middle" font-size="15.5" fill="#5a6577">시나리오 반복</text></svg></div>
+      <div class="ts-section-label" style="margin-top:26px">구조 변화</div>
+      <div class="ts-figure"><svg class="ts-svg" viewBox="0 0 1200 442" role="img" aria-label="구조 변화"><rect x="0" y="0" width="566" height="366" rx="18" fill="#FDF1ED" stroke="#E4572E" stroke-opacity=".3"/><text x="24" y="38" font-size="13" font-weight="900" letter-spacing="1.6" fill="#E4572E">BEFORE</text><rect x="24" y="64" width="518" height="46" rx="12" fill="#ffffff" stroke="#d7ddea" stroke-opacity="1"/><text x="283" y="92.5" text-anchor="middle" font-size="14.5" font-weight="800" fill="#101522">ROS 시뮬레이터</text><path d="M283 115 V 129" stroke="#E4572E" stroke-opacity=".55" stroke-width="2.2"/><path d="M278 126 L283 133 L288 126" fill="none" stroke="#E4572E" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="24" y="140" width="518" height="46" rx="12" fill="#ffffff" stroke="#E4572E" stroke-opacity=".55"/><text x="283" y="168.5" text-anchor="middle" font-size="14.5" font-weight="800" fill="#E4572E">STOMP 수신</text><path d="M283 191 V 205" stroke="#E4572E" stroke-opacity=".55" stroke-width="2.2"/><path d="M278 202 L283 209 L288 202" fill="none" stroke="#E4572E" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="24" y="216" width="518" height="46" rx="12" fill="#ffffff" stroke="#E4572E" stroke-opacity=".55"/><text x="283" y="244.5" text-anchor="middle" font-size="14.5" font-weight="800" fill="#E4572E">좌표 그대로 마커 반영</text><path d="M283 267 V 281" stroke="#E4572E" stroke-opacity=".55" stroke-width="2.2"/><path d="M278 278 L283 285 L288 278" fill="none" stroke="#E4572E" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="24" y="292" width="518" height="48" rx="12" fill="#E4572E"/><text x="283" y="321" text-anchor="middle" font-size="14" font-weight="900" fill="#ffffff">지도 위 마커 튐 · 깜빡임 · 지나간 경로선 잔존</text><rect x="634" y="0" width="566" height="442" rx="18" fill="#E9F6F0" stroke="#17A168" stroke-opacity=".3"/><text x="658" y="38" font-size="13" font-weight="900" letter-spacing="1.6" fill="#17A168">AFTER</text><rect x="658" y="64" width="518" height="46" rx="12" fill="#ffffff" stroke="#d7ddea" stroke-opacity="1"/><text x="917" y="92.5" text-anchor="middle" font-size="14.5" font-weight="800" fill="#101522">ROS 시뮬레이터</text><path d="M917 115 V 129" stroke="#17A168" stroke-opacity=".55" stroke-width="2.2"/><path d="M912 126 L917 133 L922 126" fill="none" stroke="#17A168" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="658" y="140" width="518" height="46" rx="12" fill="#ffffff" stroke="#17A168" stroke-opacity=".55"/><text x="917" y="168.5" text-anchor="middle" font-size="14.5" font-weight="800" fill="#17A168">STOMP 수신</text><path d="M917 191 V 205" stroke="#17A168" stroke-opacity=".55" stroke-width="2.2"/><path d="M912 202 L917 209 L922 202" fill="none" stroke="#17A168" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="658" y="216" width="518" height="46" rx="12" fill="#ffffff" stroke="#17A168" stroke-opacity=".55"/><text x="917" y="244.5" text-anchor="middle" font-size="14.5" font-weight="800" fill="#17A168">좌표계 보정 변환</text><path d="M917 267 V 281" stroke="#17A168" stroke-opacity=".55" stroke-width="2.2"/><path d="M912 278 L917 285 L922 278" fill="none" stroke="#17A168" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="658" y="292" width="518" height="46" rx="12" fill="#ffffff" stroke="#17A168" stroke-opacity=".55"/><text x="917" y="320.5" text-anchor="middle" font-size="14.5" font-weight="800" fill="#17A168">StateFlow → 마커 · 경로선</text><path d="M917 343 V 357" stroke="#17A168" stroke-opacity=".55" stroke-width="2.2"/><path d="M912 354 L917 361 L922 354" fill="none" stroke="#17A168" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="658" y="368" width="518" height="48" rx="12" fill="#17A168"/><text x="917" y="397" text-anchor="middle" font-size="14" font-weight="900" fill="#ffffff">부드러운 이동 · 경로 정상 갱신</text></svg></div>
     </div>    </article>
 
     <article class="project ssabree" id="project-ssabree">
@@ -1199,6 +1115,11 @@ footer { padding:34px 0 60px; text-align:center; color:var(--muted); font-size:1
         <div class="project-info">
           <h3>커뮤니티 UI와 네비게이션 흐름 구현</h3>
           <ul class="proj-lead"><li>홈, 그룹 찾기, 게시글 상세, 마이페이지, 설정, 로그인 등 다수의 Android 화면을 구현</li><li>주요 기능 진입 흐름을 연결</li></ul>
+          <div class="proj-metrics">
+            <div class="proj-metric"><b>150<em>+</em></b><span>누적 실사용자</span></div>
+            <div class="proj-metric"><b>5<em>개월</em></b><span>실서비스 운영</span></div>
+            <div class="proj-metric"><b>2<em>곳</em></b><span>스토어 출시</span></div>
+          </div>
           <div class="proj-detail">
             <div class="proj-section proj-meta">
               <div class="proj-label">프로젝트 정보</div>
@@ -1223,62 +1144,15 @@ footer { padding:34px 0 60px; text-align:center; color:var(--muted); font-size:1
       </div>
 
     <div class="trouble-card">
-      <div class="trouble-card-inner">
-        <div class="ts-left">
-          <div class="ts-badge">트러블 슈팅</div>
-          <h4 class="ts-title">AppNavGraph 중복 라우트 충돌 마커</h4>
-          <div class="ts-section-label">문제 정의</div>
-          <div class="ts-problem-box">
-            <div class="ts-issue-tag">중복 라우트 충돌</div>
-            <p class="ts-problem-desc">AppNavGraph.kt에 기능 화면이 단일 파일에 집중되면서 동일 라우트 키 중복 선언 → 화면 전환 시 예외 발생 및 네비게이션 스택 불일치</p>
-          </div>
-          <div class="ts-section-label" style="margin-top:20px">문제 해결</div>
-          <div class="ts-steps">
-            <div class="ts-step">
-              <span class="ts-step-label">① 진단</span>
-              <span class="ts-step-desc">중복 라우트 키 탐색 및 <span class="hi">충돌 지점 식별</span></span>
-            </div>
-            <div class="ts-step">
-              <span class="ts-step-label">② 전략</span>
-              <span class="ts-step-desc"><span class="hi">기능별 NavGraph 분리</span> 구조 수립</span>
-            </div>
-            <div class="ts-step">
-              <span class="ts-step-label">③ 적용</span>
-              <span class="ts-step-desc">홈·그룹·마이페이지 NavGraph 독립 파일로 <span class="hi">재구성</span></span>
-            </div>
-            <div class="ts-step">
-              <span class="ts-step-label">④ 검증</span>
-              <span class="ts-step-desc">전체 화면 전환 흐름 재테스트 · <span class="hi">안정화 확인</span></span>
-            </div>
-          </div>
-          <div class="ts-section-label" style="margin-top:20px">적용 결과</div>
-          <div class="ts-facts">
-            <div class="ts-fact"><span class="ts-fact-k">성능 개선</span><span>스켈레톤 UI 적용 · 초기 로딩 UX 개선</span></div>
-          </div>
-        </div>
-        <div class="ts-right">
-          <div class="ts-compare-label">비교</div>
-          <table class="ts-table">
-            <thead><tr><th>구분</th><th>BEFORE</th><th>AFTER</th></tr></thead>
-            <tbody>
-              <tr><td>라우팅 구조</td><td>단일 파일 집중</td><td>기능별 분리</td></tr>
-              <tr><td>충돌 발생</td><td>라우트 키 중복</td><td>키 충돌 없음</td></tr>
-              <tr><td>화면 전환</td><td>예외·스택 오류</td><td>정상 동작</td></tr>
-            </tbody>
-          </table>
-          <div class="ts-divider"></div>
-          <div class="ts-ba">
-            <div class="ts-ba-box before">
-              <div class="ts-ba-title">BEFORE</div>
-              <div class="ts-ba-content">AppNavGraph 단일 파일에 전체 화면 라우트 집중 → 충돌 빈번, 유지보수 어려움</div>
-            </div>
-            <div class="ts-ba-box after">
-              <div class="ts-ba-title">AFTER</div>
-              <div class="ts-ba-content">기능 단위 NavGraph 파일 분리 → 충돌 제거, 역할 책임 명확화</div>
-            </div>
-          </div>
-        </div>
+      <div class="ts-badge">트러블 슈팅</div>
+      <div class="ts-problem-box">
+        <h4 class="ts-title">NavGraph 중복 라우트로 인한 화면 전환 오류</h4>
+        <p class="ts-problem-desc">모든 화면이 <b>AppNavGraph 한 파일</b>에 모이면서 같은 라우트 키가 중복 선언돼 전환 예외와 스택 불일치가 났습니다.</p>
       </div>
+      <div class="ts-section-label">해결 과정</div>
+      <div class="ts-figure"><svg class="ts-svg" viewBox="0 0 1200 156" role="img" aria-label="트러블 슈팅 7단계"><line x1="86" y1="44" x2="1114" y2="44" stroke="#dfe4f0" stroke-width="3" stroke-linecap="round"/><circle cx="86" cy="44" r="26" fill="#FDEEE9" stroke="#E4572E" stroke-width="2.6"/><text x="86" y="51.5" text-anchor="middle" font-size="19" font-weight="900" fill="#E4572E">1</text><text x="86" y="102" text-anchor="middle" font-size="18" font-weight="900" fill="#101522">증상 확인</text><text x="86" y="128" text-anchor="middle" font-size="15.5" fill="#5a6577">전환 시 예외</text><circle cx="257.33333333333337" cy="44" r="26" fill="#FDEEE9" stroke="#E4572E" stroke-width="2.6"/><text x="257.33333333333337" y="51.5" text-anchor="middle" font-size="19" font-weight="900" fill="#E4572E">2</text><text x="257.33333333333337" y="102" text-anchor="middle" font-size="18" font-weight="900" fill="#101522">재현 경로</text><text x="257.33333333333337" y="128" text-anchor="middle" font-size="15.5" fill="#5a6577">충돌 화면 특정</text><circle cx="428.6666666666667" cy="44" r="26" fill="#FDF4DF" stroke="#D99A00" stroke-width="2.6"/><text x="428.6666666666667" y="51.5" text-anchor="middle" font-size="19" font-weight="900" fill="#D99A00">3</text><text x="428.6666666666667" y="102" text-anchor="middle" font-size="18" font-weight="900" fill="#101522">원인 분석</text><text x="428.6666666666667" y="128" text-anchor="middle" font-size="15.5" fill="#5a6577">라우트 키 중복</text><circle cx="600" cy="44" r="26" fill="#FDF4DF" stroke="#D99A00" stroke-width="2.6"/><text x="600" y="51.5" text-anchor="middle" font-size="19" font-weight="900" fill="#D99A00">4</text><text x="600" y="102" text-anchor="middle" font-size="18" font-weight="900" fill="#101522">대안 비교</text><text x="600" y="128" text-anchor="middle" font-size="15.5" fill="#5a6577">리네이밍 / 분리</text><circle cx="771.3333333333334" cy="44" r="26" fill="#EFEDFF" stroke="#6B5CFF" stroke-width="2.6"/><text x="771.3333333333334" y="51.5" text-anchor="middle" font-size="19" font-weight="900" fill="#6B5CFF">5</text><text x="771.3333333333334" y="102" text-anchor="middle" font-size="18" font-weight="900" fill="#101522">구조 설계</text><text x="771.3333333333334" y="128" text-anchor="middle" font-size="15.5" fill="#5a6577">기능별 NavGraph</text><circle cx="942.6666666666667" cy="44" r="26" fill="#EFEDFF" stroke="#6B5CFF" stroke-width="2.6"/><text x="942.6666666666667" y="51.5" text-anchor="middle" font-size="19" font-weight="900" fill="#6B5CFF">6</text><text x="942.6666666666667" y="102" text-anchor="middle" font-size="18" font-weight="900" fill="#101522">구현 적용</text><text x="942.6666666666667" y="128" text-anchor="middle" font-size="15.5" fill="#5a6577">3개 그래프 분리</text><circle cx="1114" cy="44" r="26" fill="#E6F5EE" stroke="#17A168" stroke-width="2.6"/><text x="1114" y="51.5" text-anchor="middle" font-size="19" font-weight="900" fill="#17A168">7</text><text x="1114" y="102" text-anchor="middle" font-size="18" font-weight="900" fill="#101522">흐름 검증</text><text x="1114" y="128" text-anchor="middle" font-size="15.5" fill="#5a6577">전체 전환 검증</text></svg></div>
+      <div class="ts-section-label" style="margin-top:26px">구조 변화</div>
+      <div class="ts-figure"><svg class="ts-svg" viewBox="0 0 1200 366" role="img" aria-label="구조 변화"><rect x="0" y="0" width="566" height="366" rx="18" fill="#FDF1ED" stroke="#E4572E" stroke-opacity=".3"/><text x="24" y="38" font-size="13" font-weight="900" letter-spacing="1.6" fill="#E4572E">BEFORE</text><rect x="24" y="64" width="518" height="46" rx="12" fill="#ffffff" stroke="#d7ddea" stroke-opacity="1"/><text x="283" y="92.5" text-anchor="middle" font-size="14.5" font-weight="800" fill="#101522">MainActivity</text><path d="M283 115 V 129" stroke="#E4572E" stroke-opacity=".55" stroke-width="2.2"/><path d="M278 126 L283 133 L288 126" fill="none" stroke="#E4572E" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="24" y="140" width="518" height="46" rx="12" fill="#ffffff" stroke="#E4572E" stroke-opacity=".55"/><text x="283" y="168.5" text-anchor="middle" font-size="14.5" font-weight="800" fill="#E4572E">AppNavGraph.kt (모든 화면 집중)</text><path d="M283 191 V 205" stroke="#E4572E" stroke-opacity=".55" stroke-width="2.2"/><path d="M278 202 L283 209 L288 202" fill="none" stroke="#E4572E" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="24" y="216" width="518" height="46" rx="12" fill="#ffffff" stroke="#E4572E" stroke-opacity=".55"/><text x="283" y="244.5" text-anchor="middle" font-size="14.5" font-weight="800" fill="#E4572E">라우트 키 중복 선언</text><path d="M283 267 V 281" stroke="#E4572E" stroke-opacity=".55" stroke-width="2.2"/><path d="M278 278 L283 285 L288 278" fill="none" stroke="#E4572E" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="24" y="292" width="518" height="48" rx="12" fill="#E4572E"/><text x="283" y="321" text-anchor="middle" font-size="14" font-weight="900" fill="#ffffff">그룹 · 마이페이지 진입 시 전환 예외 · 뒤로가기 스택 꼬임</text><rect x="634" y="0" width="566" height="366" rx="18" fill="#E9F6F0" stroke="#17A168" stroke-opacity=".3"/><text x="658" y="38" font-size="13" font-weight="900" letter-spacing="1.6" fill="#17A168">AFTER</text><rect x="658" y="64" width="518" height="46" rx="12" fill="#ffffff" stroke="#d7ddea" stroke-opacity="1"/><text x="917" y="92.5" text-anchor="middle" font-size="14.5" font-weight="800" fill="#101522">MainActivity</text><path d="M917 115 V 129" stroke="#17A168" stroke-opacity=".55" stroke-width="2.2"/><path d="M912 126 L917 133 L922 126" fill="none" stroke="#17A168" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="658" y="140" width="518" height="46" rx="12" fill="#ffffff" stroke="#17A168" stroke-opacity=".55"/><text x="917" y="168.5" text-anchor="middle" font-size="14.5" font-weight="800" fill="#17A168">Home · Group · MyPage NavGraph</text><path d="M917 191 V 205" stroke="#17A168" stroke-opacity=".55" stroke-width="2.2"/><path d="M912 202 L917 209 L922 202" fill="none" stroke="#17A168" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="658" y="216" width="518" height="46" rx="12" fill="#ffffff" stroke="#17A168" stroke-opacity=".55"/><text x="917" y="244.5" text-anchor="middle" font-size="14.5" font-weight="800" fill="#17A168">그래프별 고유 라우트 키</text><path d="M917 267 V 281" stroke="#17A168" stroke-opacity=".55" stroke-width="2.2"/><path d="M912 278 L917 285 L922 278" fill="none" stroke="#17A168" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="658" y="292" width="518" height="48" rx="12" fill="#17A168"/><text x="917" y="321" text-anchor="middle" font-size="14" font-weight="900" fill="#ffffff">모든 화면 전환 정상 · 뒤로가기 스택 일관</text></svg></div>
     </div>    </article>
   </div>
 </section>
@@ -1286,33 +1160,24 @@ footer { padding:34px 0 60px; text-align:center; color:var(--muted); font-size:1
 <section id="ai">
   <div class="container">
     <div class="kicker">AI Competency</div>
-    <h2>AI 역량 및 프론트엔드 통합 역량</h2>
-    <p class="ai-intro-quote">&ldquo;AI 모델의 강력한 추론 성능을 사용자의 화면 위에 저지연(Low-Latency)으로 구현하고, 온디바이스 최적화를 통해 비용과 보안을 극대화하는 프론트엔드 아키텍처를 설계합니다.&rdquo;</p>
+    <h2>AI 경험 및 역량</h2>
     <div class="ai-list">
       <article class="ai-item">
-        <div class="ai-item-top"><span class="ai-num">01</span><h3>온디바이스 실시간 오디오 AI 파이프라인 최적화</h3><span class="ai-proj-tag">자율 프로젝트</span></div>
-        <p class="ai-tech">사용 모델 및 기술: <strong>Whisper (int8 양자화), Piper TTS (WASM 기반), CTranslate2, FastAPI</strong></p>
-        <ul><li>강의실 내 독립 LAN(강의자 PC 1대) 온디바이스 추론 구축 → AI 비용 0원</li><li>Whisper int8 음성 인식 결과를 WebSocket 수신 → 자막 UI 실시간 동기화</li><li>WASM 기반 Piper TTS 브라우저 직접 실행 → 서버 부하 없는 분산 합성 · AudioContext 오디오 출력 제어</li></ul>
+        <div class="ai-item-top"><span class="ai-num">01</span><h3>온디바이스 AI로 강의를 실시간 번역</h3><span class="ai-proj-tag">번역의 민족</span></div>
+        <div class="ai-figs">
+          <figure class="ai-fig"><svg class="ai-svg" viewBox="0 0 1000 232" role="img" aria-label="온디바이스 처리 구조"><rect x="36" y="54" width="648" height="132" rx="18" fill="#F4F2FF" stroke="#6B5CFF" stroke-opacity=".4"/><text x="56" y="82" font-size="15" font-weight="900" fill="#6B5CFF">강의자 PC · 온디바이스</text><rect x="58" y="102" width="138" height="56" rx="12" fill="#fff" stroke="#6B5CFF" stroke-opacity=".35"/><text x="127" y="136" text-anchor="middle" font-size="15.5" font-weight="800" fill="#101522">음성 입력</text><path d="M198 130 H 209" stroke="#b7c0d3" stroke-width="2.2" stroke-linecap="round"/><path d="M204 125 L210 130 L204 135" fill="none" stroke="#b7c0d3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="214" y="102" width="138" height="56" rx="12" fill="#fff" stroke="#6B5CFF" stroke-opacity=".35"/><text x="283" y="136" text-anchor="middle" font-size="15.5" font-weight="800" fill="#101522">번역 처리</text><path d="M354 130 H 365" stroke="#b7c0d3" stroke-width="2.2" stroke-linecap="round"/><path d="M360 125 L366 130 L360 135" fill="none" stroke="#b7c0d3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="370" y="102" width="138" height="56" rx="12" fill="#fff" stroke="#6B5CFF" stroke-opacity=".35"/><text x="439" y="136" text-anchor="middle" font-size="15.5" font-weight="800" fill="#101522">자막 생성</text><path d="M510 130 H 521" stroke="#b7c0d3" stroke-width="2.2" stroke-linecap="round"/><path d="M516 125 L522 130 L516 135" fill="none" stroke="#b7c0d3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="526" y="102" width="138" height="56" rx="12" fill="#fff" stroke="#6B5CFF" stroke-opacity=".35"/><text x="595" y="136" text-anchor="middle" font-size="15.5" font-weight="800" fill="#101522">음성 출력</text><rect x="760" y="48" width="200" height="52" rx="12" fill="#f3f4f7" stroke="#dfe4f0"/><text x="860" y="80" text-anchor="middle" font-size="15" font-weight="800" fill="#9aa3b4">외부 클라우드</text><path d="M694 74 H 748" stroke="#cfd5e1" stroke-width="2" stroke-dasharray="5 6"/><path d="M712 64 L732 84 M732 64 L712 84" stroke="#E4572E" stroke-width="3.4" stroke-linecap="round"/><rect x="760" y="134" width="200" height="52" rx="12" fill="#f3f4f7" stroke="#dfe4f0"/><text x="860" y="166" text-anchor="middle" font-size="15" font-weight="800" fill="#9aa3b4">외부 API 서버</text><path d="M694 160 H 748" stroke="#cfd5e1" stroke-width="2" stroke-dasharray="5 6"/><path d="M712 150 L732 170 M732 150 L712 170" stroke="#E4572E" stroke-width="3.4" stroke-linecap="round"/><text x="360" y="218" text-anchor="middle" font-size="15" font-weight="900" fill="#6B5CFF">AI 비용 0원 · 강의 자료 외부 유출 없음</text></svg><figcaption>강의자 PC 한 대에서 음성 입력부터 음성 출력까지 처리하고, 외부 클라우드와 API 서버로는 데이터를 내보내지 않습니다.</figcaption></figure>
+          <figure class="ai-fig"><svg class="ai-svg" viewBox="0 0 1000 170" role="img" aria-label="강의자료 번역 파이프라인"><rect x="30" y="40" width="250" height="74" rx="14" fill="#fff" stroke="#dfe4f0" stroke-opacity="1"/><text x="155" y="72" text-anchor="middle" font-size="17" font-weight="900" fill="#101522">한국어 강의자료</text><text x="155" y="95" text-anchor="middle" font-size="13.5" fill="#6b7689">PDF · 슬라이드</text><path d="M305 77 H 341" stroke="#b7c0d3" stroke-width="2.4" stroke-linecap="round"/><path d="M334 71 L342 77 L334 83" fill="none" stroke="#b7c0d3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><rect x="375" y="40" width="250" height="74" rx="14" fill="#F4F2FF" stroke="#6B5CFF" stroke-opacity=".45"/><text x="500" y="72" text-anchor="middle" font-size="17" font-weight="900" fill="#6B5CFF">OCR → 기계 번역</text><text x="500" y="95" text-anchor="middle" font-size="13.5" fill="#6b7689">텍스트 영역 추출 후 번역</text><path d="M650 77 H 686" stroke="#b7c0d3" stroke-width="2.4" stroke-linecap="round"/><path d="M679 71 L687 77 L679 83" fill="none" stroke="#b7c0d3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><rect x="720" y="40" width="250" height="74" rx="14" fill="#fff" stroke="#dfe4f0" stroke-opacity="1"/><text x="845" y="72" text-anchor="middle" font-size="17" font-weight="900" fill="#101522">영어 강의자료</text><text x="845" y="95" text-anchor="middle" font-size="13.5" fill="#6b7689">원본 레이아웃 유지</text><rect x="375" y="128" width="250" height="34" rx="10" fill="#fff" stroke="#6B5CFF" stroke-opacity=".3" stroke-dasharray="5 5"/><text x="500" y="150" text-anchor="middle" font-size="13.5" font-weight="800" fill="#6B5CFF">전문 용어 사전 (glossary)</text><path d="M500 128 V 118" stroke="#6B5CFF" stroke-opacity=".45" stroke-width="2"/><path d="M495 123 L500 116 L505 123" fill="none" stroke="#6B5CFF" stroke-opacity=".45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><figcaption>OCR로 뽑은 텍스트를 기계 번역에 넘기고, 전문 용어 사전을 함께 적용해 강의 용어를 정확히 옮깁니다.</figcaption></figure>
+          <figure class="ai-fig"><svg class="ai-svg" viewBox="0 0 1000 290" role="img" aria-label="데이터별 지연 차이와 동기화"><text x="30" y="30" font-size="15" font-weight="900" fill="#101522">데이터마다 도착 시각이 다르다</text><text x="192" y="76" text-anchor="end" font-size="15" font-weight="800" fill="#101522">슬라이드 · 포인터</text><rect x="196" y="52" width="560" height="32" rx="9" fill="#F1EFFE"/><rect x="196" y="52" width="74" height="32" rx="9" fill="#6B5CFF" fill-opacity=".16"/><rect x="198" y="54" width="70" height="28" rx="8" fill="#6B5CFF"/><text x="233" y="73" text-anchor="middle" font-size="13.5" font-weight="900" fill="#fff">~50ms</text><text x="192" y="122" text-anchor="end" font-size="15" font-weight="800" fill="#101522">강의자 원본 음성</text><rect x="196" y="98" width="560" height="32" rx="9" fill="#F1EFFE"/><rect x="196" y="98" width="79" height="32" rx="9" fill="#6B5CFF" fill-opacity=".16"/><rect x="203" y="100" width="70" height="28" rx="8" fill="#6B5CFF"/><text x="238" y="119" text-anchor="middle" font-size="13.5" font-weight="900" fill="#fff">300ms</text><text x="192" y="168" text-anchor="end" font-size="15" font-weight="800" fill="#101522">자막</text><rect x="196" y="144" width="560" height="32" rx="9" fill="#F1EFFE"/><rect x="196" y="144" width="394.99999999999994" height="32" rx="9" fill="#6B5CFF" fill-opacity=".16"/><rect x="519" y="146" width="70" height="28" rx="8" fill="#6B5CFF"/><text x="554" y="165" text-anchor="middle" font-size="13.5" font-weight="900" fill="#fff">1.5초</text><text x="192" y="214" text-anchor="end" font-size="15" font-weight="800" fill="#101522">번역 음성 TTS</text><rect x="196" y="190" width="560" height="32" rx="9" fill="#F1EFFE"/><rect x="196" y="190" width="474" height="32" rx="9" fill="#6B5CFF" fill-opacity=".16"/><rect x="598" y="192" width="70" height="28" rx="8" fill="#6B5CFF"/><text x="633" y="211" text-anchor="middle" font-size="13.5" font-weight="900" fill="#fff">1.8초</text><rect x="196" y="252" width="560" height="34" rx="10" fill="#17A168"/><text x="476" y="275" text-anchor="middle" font-size="14.5" font-weight="900" fill="#fff">버퍼로 정렬해 같은 시점에 도착</text></svg><figcaption>슬라이드 · 음성 · 자막 · TTS는 생성 시간이 달라 도착 시각이 어긋납니다. 버퍼로 정렬해 같은 시점에 보여줍니다.</figcaption></figure>
+        </div>
+        <ul><li>강의실 독립 LAN에 온디바이스 추론을 구축해 AI 비용 0원 · 강의 자료 외부 유출 없음</li><li>음성 인식과 번역 결과를 WebSocket으로 받아 자막 UI에 실시간 동기화</li><li>OCR 좌표와 번역 결과를 화면 위 레이어로 매핑해 번역 오버레이 구현</li></ul>
       </article>
       <article class="ai-item">
-        <div class="ai-item-top"><span class="ai-num">02</span><h3>비전 멀티모달(VLM) 및 이미지 처리 UI 통합</h3><span class="ai-proj-tag">자율 / 특화 프로젝트</span></div>
-        <p class="ai-tech">사용 모델 및 기술: <strong>Qwen3-VL-4B-Instruct, Surya OCR, OpenCV</strong></p>
-        <ul><li>Qwen3-VL + Surya OCR로 강의 슬라이드 시각 문맥 분석</li><li>OCR 좌표 + VLM 번역 결과 → WebRTC 화면 위 CSS/SVG 레이어 매핑 → 인터랙티브 번역 오버레이 구현</li><li>OpenCV로 이미지 노이즈 제거 · 배경 복원 → 실시간 클린 렌더링</li></ul>
+        <div class="ai-item-top"><span class="ai-num">02</span><h3>LLM 파이프라인 구축과 모델 튜닝</h3></div>
+        <ul><li>Pandas로 대용량 데이터를 전처리해 LLM API 연동 자동화 파이프라인 구축</li><li>구조화된 프롬프트로 전문가 페르소나를 부여하고 분석 결과를 화면 컴포넌트에 바인딩</li><li>하이퍼파라미터를 체계적으로 튜닝해 이미지 분류 정확도 60점 → 83점</li></ul>
       </article>
       <article class="ai-item">
-        <div class="ai-item-top"><span class="ai-num">03</span><h3>로컬 NMT 기반 실시간 텍스트 번역 및 감성 분석</h3><span class="ai-proj-tag">특화 프로젝트 / AI 챌린지</span></div>
-        <p class="ai-tech">사용 모델 및 기술: <strong>Meta NLLB-200, CTranslate2</strong></p>
-        <ul><li>Meta NLLB-200 + CTranslate2 로컬 추론 → 실시간 번역 인터페이스 구축</li><li>대규모 텍스트 스트림 수신 시 비동기 상태 관리 고도화 → 화면 깜빡임 · 렌더링 병목 제거</li></ul>
-      </article>
-      <article class="ai-item">
-        <div class="ai-item-top"><span class="ai-num">04</span><h3>LLM API 연동 및 데이터 가공 파이프라인</h3><span class="ai-proj-tag">공통 프로젝트</span></div>
-        <p class="ai-tech">사용 모델 및 기술: <strong>OpenAI API (ChatGPT), Anthropic API (Claude), Python, Pandas</strong></p>
-        <ul><li>Pandas로 대용량 데이터 전처리 → LLM API 연동 자동화 파이프라인 구축</li><li>구조화된 프롬프트로 전문가 페르소나 부여 → 분석 결과를 프론트엔드 컴포넌트에 바인딩 · 문서화 뷰어 구현</li></ul>
-      </article>
-      <article class="ai-item">
-        <div class="ai-item-top"><span class="ai-num">05</span><h3>데이터 정제 및 ML 하이퍼파라미터 튜닝</h3><span class="ai-proj-tag">관통 프로젝트 / 기초 실습</span></div>
-        <p class="ai-tech">사용 모델 및 기술: <strong>Scikit-learn, NumPy, Pandas, CNN, Vision Transformer</strong></p>
-        <ul><li>NumPy · Pandas로 결측치 처리 · 스케일링 등 데이터 전처리</li><li>체계적 하이퍼파라미터 튜닝 → 이미지 분류 정확도 60점 → 83점 개선</li></ul>
+        <div class="ai-item-top"><span class="ai-num">03</span><h3>디자인부터 문서 · 디버깅까지 AI로</h3></div>
+        <ul><li>컨셉 · 캐릭터 · 배너 이미지를 AI로 생성해 프로젝트 디자인에 직접 활용</li><li>기획서 · 발표 자료의 초안 작성과 구조 정리에 활용</li><li>에러 로그 분석과 리팩터링 보조로 디버깅 시간 단축</li></ul>
       </article>
     </div>
   </div>
