@@ -198,9 +198,11 @@ h2 { margin:0; font-size:clamp(30px,3.5vw,46px); line-height:1.15; letter-spacin
 /* 다른 카드와 달리 오른쪽 설명이 짧아 행 높이가 늘지 않으므로, 폰(최대 429 x 858) 전체가 들어가도록 커버 높이를 직접 잡는다 */
 .project.goldfish .project-cover { min-height:1200px; }
 /* 진행 중 표시 */
-.proj-status { align-self:flex-end; display:inline-flex; align-items:center; gap:8px; padding:7px 14px; border-radius:999px; background:#fff6e0; border:1px solid #f1d58f; color:#a8740a; font-size:14px; font-weight:900; }
+.proj-status { flex:none; display:inline-flex; align-items:center; gap:8px; padding:7px 14px; border-radius:999px; background:#fff6e0; border:1px solid #f1d58f; color:#a8740a; font-size:14px; font-weight:900; }
 .proj-status i { width:8px; height:8px; border-radius:999px; background:#e5ae2f; box-shadow:0 0 0 0 rgba(229,174,47,.6); animation:demoLivePulse 1.6s ease-out infinite; }
-.goldfish .project-info h3 { margin-top:18px; }
+/* 제목과 진행 중 칩을 한 줄에 — 좁으면 칩이 아래로 내려간다 */
+.proj-title-row { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 16px; margin:30px 0 14px; }
+.proj-title-row h3 { margin:0 !important; }
 .project-index { position:relative; z-index:1; font-weight:950; opacity:.84; margin-bottom:22px; }
 .project-cover h3 { position:relative; z-index:1; margin:0; font-size:clamp(38px,3.8vw,58px); line-height:1.08; letter-spacing:-.07em; max-width:360px; }
 .project-cover p { position:relative; z-index:1; margin:18px 0 0; font-size:21px; font-weight:850; max-width:420px; }
@@ -1244,8 +1246,7 @@ footer { padding:34px 0 60px; text-align:center; color:var(--muted); font-size:1
           </div>
         </div>
         <div class="project-info">
-          <span class="proj-status"><i></i>현재 진행 중</span>
-          <h3>낚시 기록 및 도감 수집 커뮤니티 앱</h3>
+          <div class="proj-title-row"><h3>낚시 기록 및 도감 수집 커뮤니티 앱</h3><span class="proj-status"><i></i>현재 진행 중</span></div>
           <ul class="proj-lead"><li>출조 기록, 잡은 어종, 나만의 포인트를 한 앱에서 관리하는 낚시인 기록 플랫폼</li><li>앱 로고 · 스플래시 · 도감 화면을 먼저 구현하고, 홈 · 게시판 · 지도 · 출조기록 · 마이페이지는 현재 진행 중</li></ul>
           <div class="proj-detail">
             <div class="proj-section proj-meta">

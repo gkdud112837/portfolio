@@ -228,10 +228,9 @@
 }
 .home .btn-call svg { width: 15px; height: 15px; }
 .home .quick { position: absolute; left: 14px; right: 14px; top: 372px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.home .quick-card { height: 84px; padding: 12px 13px; border-radius: 13px; background: #2e7d32; color: #fff; }
-.home .quick-card svg { width: 17px; height: 17px; color: #a5d5a7; }
-.home .quick-card b { display: block; margin-top: 13px; font-size: 10.5px; font-weight: 800; }
-.home .quick-card span { font-size: 7.6px; color: #d5ead5; }
+.home .quick-card { height: 84px; padding: 0 14px; display: flex; align-items: center; gap: 8px; border-radius: 13px; background: #2e7d32; color: #fff; }
+.home .quick-card svg { flex: none; width: 17px; height: 17px; color: #a5d5a7; }
+.home .quick-card b { font-size: 11.5px; font-weight: 800; }
 .home .sec-title { position: absolute; left: 14px; top: 470px; font-size: 10.5px; font-weight: 800; }
 .home .dests { position: absolute; left: 14px; right: 10px; top: 490px; }
 .home .dest { display: flex; align-items: center; gap: 13px; height: 50px; }

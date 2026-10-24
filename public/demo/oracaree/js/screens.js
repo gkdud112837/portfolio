@@ -64,8 +64,8 @@
           '<div class="btn-call" data-k="call">지금 호출하기 ' + icon('arrow', 15) + '</div>' +
         '</div>' +
         '<div class="quick">' +
-          '<div class="quick-card">' + icon('history', 17) + '<b>이용내역</b><span>지난 여정 확인</span></div>' +
-          '<div class="quick-card">' + icon('bookmark', 17) + '<b>저장된 장소</b><span>집, 회사...</span></div>' +
+          '<div class="quick-card">' + icon('history', 17) + '<b>이용내역</b></div>' +
+          '<div class="quick-card">' + icon('bookmark', 17) + '<b>저장된 장소</b></div>' +
         '</div>' +
         '<div class="sec-title">최근 목적지</div>' +
         '<div class="dests">' + dests.map(function (d) {
