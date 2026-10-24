@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>오라카이 ORAcarEE — 데모</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%234CAF50'/%3E%3Cpath d='M12 30h24M15 30v4M33 30v4M14 30l3-9h14l3 9' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/frame.css" />
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+
+  <div class="stage-outer">
+    <div class="stage" id="stage">
+      <div class="phone-wrap" id="phone1-wrap">
+        <div class="phone-label">오라카이 앱</div>
+        <div class="phone" id="phone1">
+          <div class="statusbar">
+            <span class="sb-time"><b>KT</b> <span data-clock>9:13</span></span>
+            <span class="sb-icons" data-sbicons></span>
+          </div>
+          <div class="screen" data-screen></div>
+          <div class="headsup" id="headsup">
+            <img src="assets/otter-down-right.png" alt="">
+            <div><b>수달 택시 결제 안내</b><span>도착시 결제수단에 등록하신 카드로 결제 됩니다.</span></div>
+          </div>
+          <div class="toast hidden" id="toast"></div>
+          <!-- 녹화 기기(갤럭시)의 3버튼 내비게이션 바 -->
+          <div class="navbar" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M7 6v12M12 6v12M17 6v12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <svg viewBox="0 0 24 24"><rect x="5.5" y="5.5" width="13" height="13" rx="4.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/icons.js"></script>
+  <script src="js/tracks.js"></script>
+  <script src="js/screens.js"></script>
+  <script src="js/scenario.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>황금어장 — 데모</title>
+<style>
+/* ============================================================
+   황금어장 데모 — 440 x 880 뷰포트 안에 380 x 800 폰(화면 360 x 780)
+   스플래시 · 로그인 · 도감 · 도감 상세는 실제 앱 화면 캡처,
+   홈 · 게시판은 피그마 구성을 도감 화면과 같은 톤으로 옮겼다.
+   ============================================================ */
+:root {
+  --gold: #E5AE2F; --gold-soft: #FCEFD3; --ink: #111318; --muted: #8B8F98;
+  --card: #F1F1F3; --line: #E6E7EB;
+  --font: Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+[hidden] { display: none !important; }
+html, body { width: 440px; height: 880px; overflow: hidden; background: transparent; font-family: var(--font); }
+.phone {
+  position: absolute; left: 30px; top: 40px; width: 380px; height: 800px;
+  border: 10px solid #16161a; border-radius: 38px; background: #fff; overflow: hidden;
+}
+.phone::before {
+  content: ''; position: absolute; top: 11px; left: 50%; transform: translateX(-50%);
+  width: 13px; height: 13px; border-radius: 50%; background: #000; z-index: 60;
+}
+.screen { position: absolute; inset: 0; opacity: 0; transition: opacity .45s ease; background: #fff; overflow: hidden; }
+.screen.on { opacity: 1; z-index: 2; }
+.screen > img.cap { display: block; width: 360px; height: 780px; }
+
+/* 도감 상세 — 실제 캡처 두 장을 이어 아래로 스크롤하는 모습 */
+.scroller { position: absolute; inset: 0; overflow: hidden; }
+.scroller .clip { position: absolute; left: 0; right: 0; top: 0; bottom: 43px; overflow: hidden; }
+.scroller .clip .rail { position: relative; height: 1048px; transition: transform 1.6s cubic-bezier(.45,0,.2,1); }
+.scroller .clip .part { position: absolute; left: 0; width: 360px; overflow: hidden; }
+.scroller .clip img { display: block; width: 360px; }
+/* 두 캡처에 함께 담긴 'PERSONAL BEST' 카드(첫 장 y 662 = 둘째 장 y 351)를 기준으로 맞물려 잇는다 */
+.scroller .part-a { top: 0; height: 662px; }
+.scroller .part-b { top: 662px; height: 386px; }
+.scroller .part-b img { margin-top: -351px; }
+.scroller .bar { position: absolute; left: 0; right: 0; top: 0; height: 73px; overflow: hidden; z-index: 2; }
+.scroller .bar img { display: block; width: 360px; }
+.scroller .nav { position: absolute; left: 0; right: 0; bottom: 0; height: 43px; overflow: hidden; }
+.scroller .nav img { display: block; width: 360px; margin-top: -737px; }
+
+/* ─── 공통: 하단 탭바 · 시스템 내비 ─── */
+.tabbar { position: absolute; left: 0; right: 0; top: 676px; height: 61px; display: flex; background: #fff; border-top: 1px solid #f2f2f4; }
+.tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: #4b4f58; }
+.tab i { display: grid; place-items: center; width: 44px; height: 27px; border-radius: 14px; }
+.tab svg { width: 21px; height: 21px; }
+.tab span { font-size: 9.5px; font-weight: 800; color: #111; display: none; }
+.tab.on i { background: #EDEDF0; }
+.tab.on span { display: block; }
+.sysnav { position: absolute; left: 0; right: 0; bottom: 0; height: 43px; background: #979797; display: flex; align-items: center; justify-content: space-around; padding: 0 60px; color: #fff; }
+.sysnav svg { width: 17px; height: 17px; }
+
+/* ─── 홈 ─── */
+.home { background: #F7F7F9; }
+.home-top { position: absolute; left: 18px; right: 18px; top: 36px; display: flex; justify-content: space-between; align-items: center; color: #444; }
+.home-top .r { display: flex; gap: 12px; }
+.home-top .r i { width: 30px; height: 30px; border-radius: 999px; background: #fff; display: grid; place-items: center; box-shadow: 0 2px 8px rgba(0,0,0,.05); }
+.home-top svg { width: 17px; height: 17px; }
+.hello { position: absolute; left: 22px; right: 22px; top: 92px; display: flex; justify-content: space-between; align-items: flex-end; }
+.hello h1 { font-size: 20px; line-height: 1.38; font-weight: 800; letter-spacing: -.03em; color: var(--ink); }
+.hello h1 b { color: var(--gold); }
+.hello .chev { color: #999; font-size: 18px; margin-bottom: 4px; }
+.stats { position: absolute; left: 18px; right: 18px; top: 172px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.stat { height: 74px; padding: 13px 14px; border-radius: 18px; background: #fff; box-shadow: 0 4px 14px rgba(20,20,30,.05); }
+.stat svg { width: 18px; height: 18px; color: var(--gold); }
+.stat small { display: block; margin-top: 4px; font-size: 9px; color: var(--muted); font-weight: 600; }
+.stat b { font-size: 16px; font-weight: 900; letter-spacing: -.02em; }
+.best {
+  position: absolute; left: 18px; right: 18px; top: 260px; height: 104px; padding: 16px 18px; overflow: hidden;
+  border-radius: 22px; background: linear-gradient(135deg, #F0B93B, #E09A16); color: #fff;
+  box-shadow: 0 10px 24px rgba(229,174,47,.35);
+}
+.best small { font-size: 9.5px; font-weight: 700; opacity: .92; }
+.best b { display: block; margin-top: 6px; font-size: 22px; font-weight: 900; letter-spacing: -.03em; }
+.best span { display: block; margin-top: 4px; font-size: 9.5px; opacity: .9; }
+.best::after { content: ''; position: absolute; right: -26px; top: -30px; width: 150px; height: 150px; border-radius: 999px; background: rgba(255,255,255,.14); }
+.best img { position: absolute; right: 22px; top: 22px; width: 58px; z-index: 1; filter: drop-shadow(0 4px 8px rgba(0,0,0,.18)); }
+.sec { position: absolute; left: 22px; right: 22px; top: 386px; display: flex; justify-content: space-between; font-size: 13px; font-weight: 800; }
+.sec em { font-style: normal; color: #999; }
+.trips { position: absolute; left: 18px; top: 414px; display: flex; gap: 12px; }
+.trip { width: 200px; padding: 10px; border-radius: 20px; background: #fff; box-shadow: 0 4px 14px rgba(20,20,30,.05); }
+.trip .ph { height: 110px; border-radius: 14px; }
+.ph-a { background: linear-gradient(180deg, #F6D7C3 0%, #DCD9EA 45%, #8FA9C8 62%, #3E5F84 100%); }
+.ph-b { background: linear-gradient(180deg, #9CC9EE 0%, #C8E2F4 40%, #4E87B8 58%, #2E5E8C 100%); }
+.trip b { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 11.5px; font-weight: 800; }
+.trip b em { font-style: normal; font-size: 8.5px; color: var(--gold); background: var(--gold-soft); padding: 3px 7px; border-radius: 999px; }
+.trip span { display: block; margin-top: 3px; font-size: 9px; color: var(--muted); }
+.quick-log { position: absolute; left: 18px; right: 18px; top: 596px; height: 62px; display: flex; align-items: center; gap: 12px; padding: 0 16px; border-radius: 18px; background: #fff; box-shadow: 0 4px 14px rgba(20,20,30,.05); }
+.quick-log i { width: 34px; height: 34px; border-radius: 12px; background: var(--gold-soft); display: grid; place-items: center; color: var(--gold); }
+.quick-log svg { width: 18px; height: 18px; }
+.quick-log b { font-size: 11.5px; font-weight: 800; }
+.quick-log span { display: block; font-size: 9px; color: var(--muted); }
+
+/* ─── 게시판 ─── */
+.board-top { position: absolute; left: 16px; right: 16px; top: 34px; display: flex; align-items: center; gap: 10px; }
+.board-top .search { flex: 1; height: 36px; border-radius: 12px; background: var(--card); display: flex; align-items: center; padding: 0 12px; font-size: 10.5px; color: #9a9da5; }
+.board-top svg { width: 18px; height: 18px; color: #555; }
+.chips { position: absolute; left: 16px; top: 82px; display: flex; gap: 7px; }
+.chip { padding: 7px 13px; border-radius: 999px; background: var(--card); font-size: 10.5px; font-weight: 700; color: #555; }
+.chip.on { background: var(--gold); color: #fff; }
+.posts { position: absolute; left: 16px; right: 16px; top: 122px; display: grid; gap: 10px; }
+.post { position: relative; padding: 13px 14px; border-radius: 16px; background: #fff; border: 1px solid var(--line); }
+.post .meta { display: flex; align-items: center; gap: 6px; font-size: 8.5px; color: var(--muted); }
+.post .tag { padding: 2px 7px; border-radius: 5px; background: var(--gold-soft); color: #C98D10; font-weight: 800; }
+.post b { display: block; margin-top: 7px; font-size: 11.5px; font-weight: 800; line-height: 1.4; }
+.post p { margin-top: 4px; font-size: 9.5px; line-height: 1.5; color: #5d616a; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.post.has-img b, .post.has-img p { margin-right: 74px; }
+.post .thumb { position: absolute; right: 12px; top: 30px; width: 62px; height: 56px; border-radius: 10px; }
+.post .foot { display: flex; justify-content: space-between; margin-top: 8px; font-size: 8.5px; color: var(--muted); }
+.post .foot span { display: flex; gap: 9px; }
+.post .foot .like { color: #E2574C; }
+.fab { position: absolute; right: 18px; top: 612px; width: 48px; height: 48px; border-radius: 999px; background: var(--gold); color: #fff; display: grid; place-items: center; box-shadow: 0 8px 18px rgba(229,174,47,.45); z-index: 3; }
+.fab svg { width: 22px; height: 22px; }
+
+/* ─── 탭 하이라이트 (시연용) ─── */
+.tap { position: absolute; z-index: 40; width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 999px; background: rgba(229,174,47,.38); opacity: 0; pointer-events: none; }
+.tap.go { animation: tap .6s ease-out; }
+@keyframes tap { 0% { opacity: 1; transform: scale(.4); } 100% { opacity: 0; transform: scale(1.4); } }
+
+/* 단독으로 열었을 때는 가운데 배경을 깔아 둔다 */
+body:not(.kiosk) { background: #f3efe4; }
+</style>
+</head>
+<body>
+<div class="phone" id="phone">
+
+  <section class="screen" data-s="splash"><img class="cap" src="assets/splash.jpg" alt="스플래시"></section>
+  <section class="screen" data-s="login"><img class="cap" src="assets/login.jpg" alt="로그인"></section>
+
+  <section class="screen home" data-s="home">
+    <div class="home-top">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>
+      <div class="r">
+        <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15zM10 20a2 2 0 0 0 4 0"/></svg></i>
+        <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18.5a7 7 0 0 1 11 0"/></svg></i>
+      </div>
+    </div>
+    <div class="hello"><h1>안녕하세요,<br><b>프로 앵글러</b> 김태윤님</h1><span class="chev">›</span></div>
+    <div class="stats">
+      <div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8c3-2 6 2 9 0s6-2 9 0M3 13c3-2 6 2 9 0s6-2 9 0M3 18c3-2 6 2 9 0s6-2 9 0"/></svg><small>총 출조 횟수</small><b>24회</b></div>
+      <div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M2 12c4-6 11-6 15 0-4 6-11 6-15 0zM17 12l5-4v8z"/><circle cx="8" cy="11" r="1" fill="currentColor"/></svg><small>누적 어획량</small><b>128마리</b></div>
+    </div>
+    <div class="best"><small>현재 나의 최대어</small><b>참돔 82cm</b><span>2025.10.15 · 제주도 형제섬</span><img src="assets/stamp.png" alt=""></div>
+    <div class="sec">최근 출조 기록<em>›</em></div>
+    <div class="trips">
+      <div class="trip"><div class="ph ph-a"></div><b>통영 앞바다 선상 낚시<em>대박</em></b><span>2025.11.02</span></div>
+      <div class="trip"><div class="ph ph-b"></div><b>부산 기장 갯바위<em>참돔</em></b><span>2025.10.15</span></div>
+    </div>
+    <div class="quick-log"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg></i><div><b>오늘의 출조 기록하기</b><span>장소 · 조과 · 장비를 한 번에 남겨요</span></div></div>
+  </section>
+
+  <section class="screen" data-s="board">
+    <div class="board-top"><div class="search">제목, 어종, 지역으로 검색</div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg></div>
+    <div class="chips"><span class="chip on">전체</span><span class="chip">자유</span><span class="chip">조황정보</span><span class="chip">팁/노하우</span></div>
+    <div class="posts">
+      <article class="post"><div class="meta"><span class="tag">조황정보</span>3분 전</div><b>제주도 무늬오징어 첫 수 성공! 포인트 공유합니다</b><p>드디어 제주도에서 무늬오징어를 잡았습니다. 에기 색상은 케이무라를 사용했고, 액션은 짧게 두 번…</p><div class="foot">초보조사<span><em>👁 42</em><em class="like">♥ 12</em><em>💬 5</em></span></div></article>
+      <article class="post has-img"><div class="meta"><span class="tag">자유</span>1시간 전</div><b>새로 산 릴 자랑좀 해봅니다 ㅎㅎ</b><p>큰맘 먹고 스텔라 하나 장만했어요</p><div class="thumb ph-b"></div><div class="foot">앵글러kim<span><em>👁 128</em><em class="like">♥ 4</em></span></div></article>
+      <article class="post"><div class="meta"><span class="tag">팁/노하우</span>3시간 전</div><b>초보자를 위한 합사 매듭법 완벽 정리 (FG노트)</b><p>루어 낚시의 기본인 FG노트 매는 법을 영상 캡처와 함께 상세히 설명해 드립니다.</p><div class="foot">낚시마스터<span><em>👁 532</em><em class="like">♥ 89</em><em>💬 24</em></span></div></article>
+      <article class="post has-img"><div class="meta"><span class="tag">조황정보</span>어제</div><b>통영 갯바위 감성돔 4짜 조황</b><p>바람이 많이 불었지만 운 좋게…</p><div class="thumb ph-a"></div><div class="foot">갯바위조사<span><em>👁 310</em><em class="like">♥ 45</em></span></div></article>
+    </div>
+    <div class="fab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>
+  </section>
+
+  <section class="screen" data-s="dex"><img class="cap" src="assets/dex-list.jpg" alt="도감"></section>
+
+  <section class="screen" data-s="detail">
+    <div class="scroller">
+      <div class="clip"><div class="rail"><div class="part part-a"><img src="assets/dex-detail1.jpg" alt="도감 상세"></div><div class="part part-b"><img src="assets/dex-detail2.jpg" alt=""></div></div></div>
+      <div class="bar"><img src="assets/dex-detail1.jpg" alt=""></div>
+      <div class="nav"><img src="assets/dex-detail1.jpg" alt=""></div>
+    </div>
+  </section>
+
+  <!-- 홈 · 게시판 공용 탭바와 시스템 내비 (도감 캡처와 같은 모양) -->
+  <nav class="tabbar" id="tabbar" hidden>
+    <div class="tab" data-t="home"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 11l8-7 8 7v8.5a1 1 0 0 1-1 1h-4.5V15h-5v5.5H5a1 1 0 0 1-1-1z"/></svg></i><span>홈</span></div>
+    <div class="tab" data-t="board"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01" stroke-width="2.4" stroke-linecap="round"/></svg></i><span>게시판</span></div>
+    <div class="tab" data-t="map"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s6-5.6 6-10.5a6 6 0 0 0-12 0C6 15.4 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.2"/><path d="M5 21h14"/></svg></i><span>지도</span></div>
+    <div class="tab" data-t="log"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></i><span>기록</span></div>
+    <div class="tab" data-t="dex"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 6c3-1.5 6-1.5 9 0v13c-3-1.5-6-1.5-9 0zM21 6c-3-1.5-6-1.5-9 0v13c3-1.5 6-1.5 9 0z"/></svg></i><span>도감</span></div>
+  </nav>
+  <div class="sysnav" id="sysnav" hidden>
+    <svg viewBox="0 0 24 24"><path d="M7 6v12M12 6v12M17 6v12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <svg viewBox="0 0 24 24"><rect x="5.5" y="5.5" width="13" height="13" rx="4.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+  <div class="tap" id="tap"></div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var screens = {};
+  document.querySelectorAll('.screen').forEach(function (s) { screens[s.dataset.s] = s; });
+  var tabbar = document.getElementById('tabbar');
+  var sysnav = document.getElementById('sysnav');
+  var tapEl = document.getElementById('tap');
+  var rail = document.querySelector('.scroller .rail');
+
+  function show(name) {
+    Object.keys(screens).forEach(function (k) { screens[k].classList.toggle('on', k === name); });
+    /* 홈 · 게시판만 HTML 탭바를 쓰고, 캡처 화면은 자기 탭바가 그려져 있다 */
+    var own = name === 'home' || name === 'board';
+    tabbar.hidden = !own; sysnav.hidden = !own;
+    tabbar.style.zIndex = sysnav.style.zIndex = 5;
+    tabbar.querySelectorAll('.tab').forEach(function (t) { t.classList.toggle('on', t.dataset.t === name); });
+    if (name === 'detail') { rail.style.transition = 'none'; rail.style.transform = 'translateY(0)'; void rail.offsetWidth; rail.style.transition = ''; }
+  }
+  function tap(x, y) {
+    tapEl.style.left = x + 'px'; tapEl.style.top = y + 'px';
+    tapEl.classList.remove('go'); void tapEl.offsetWidth; tapEl.classList.add('go');
+  }
+
+  /* [시각(ms), 동작] — 스플래시 → 로그인 → 홈 → 게시판 → 도감 → 도감 상세 → 반복 */
+  var SCRIPT = [
+    [0, function () { show('splash'); }],
+    [2200, function () { show('login'); }],
+    [3900, function () { tap(180, 541); }],
+    [4400, function () { show('home'); }],
+    [7400, function () { tap(108, 706); }],
+    [7800, function () { show('board'); }],
+    [11000, function () { tap(324, 706); }],
+    [11400, function () { show('dex'); }],
+    [13600, function () { tap(61, 196); }],
+    [14000, function () { show('detail'); }],
+    [16200, function () { rail.style.transform = 'translateY(-311px)'; }],
+    [20200, null]
+  ];
+  var timers = [];
+  function play() {
+    timers.forEach(clearTimeout); timers = [];
+    SCRIPT.forEach(function (s) { timers.push(setTimeout(s[1] || play, s[0])); });
+  }
+
+  if ((location.hash || '').indexOf('kiosk') !== -1) document.body.classList.add('kiosk');
+  show('splash');
+  var started = false;
+  function start() { if (started) return; started = true; play(); }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (e, o) { if (e[0].isIntersecting) { start(); o.disconnect(); } }, { threshold: 0.05 }).observe(document.getElementById('phone'));
+  }
+  setTimeout(start, 1200);
+})();
+</script>
+</body>
+</html>

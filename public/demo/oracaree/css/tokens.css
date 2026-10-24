@@ -1,0 +1,33 @@
+/* ============================================================
+   ORAcarEE 데모 — 디자인 토큰 (실제 앱 Color.kt 기준)
+   ============================================================ */
+
+:root {
+  --primary: #4CAF50;
+  --primary-strong: #3E9B42;
+  --on-primary: #FFFFFF;
+  --primary-container: #E8F5E9;
+  --background: #FFFFFF;
+  --surface: #FFFFFF;
+  --surface-soft: #F6F8F6;
+  --on-background: #1C1B1F;
+  --on-surface: #1C1B1F;
+  --on-surface-variant: #6B6B70;
+  --outline: #E3E6E3;
+  --field: #F3F5F3;
+  --danger: #E03B3B;
+  --info: #3A7BD5;
+
+  --page-bg: #EEF2EE;
+  --radius: 16px;
+  --font: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+
+  /* 지도 */
+  --map-land: #F2F1EC;
+  --map-block: #E7E6DF;
+  --map-road: #FFFFFF;
+  --map-main-road: #FCE9A8;
+  --map-water: #BFD9E8;
+  --map-green: #D8E8CE;
+  --map-route: #2F6DE0;
+}

@@ -4,5 +4,8 @@
 /oracaree/
 /ssabreetime/
 /concept/
-/public/
+# public 은 페이지가 쓰는 데모 · 인트로 영상만 올린다
+/public/*
+!/public/demo/
+!/public/intro/
 /ssafy_s/
